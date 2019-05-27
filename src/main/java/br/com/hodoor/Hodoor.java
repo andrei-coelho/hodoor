@@ -1,12 +1,10 @@
 package br.com.hodoor;
 
-import android.app.Activity;
 import android.content.Context;
 import android.os.Handler;
 import android.util.Log;
 
 import com.android.volley.RequestQueue;
-import com.android.volley.Response;
 import com.android.volley.VolleyError;
 import com.android.volley.toolbox.StringRequest;
 import com.android.volley.toolbox.Volley;
@@ -27,7 +25,7 @@ public class Hodoor<T> {
     private int id = 1;
     private Class classResponse;
     private Response response;
-    private boolean returnJson = true;
+    private boolean returnJson = false;
 
     private static RequestQueue queue;
     private static Handler handler;
@@ -120,7 +118,7 @@ public class Hodoor<T> {
             this.response.response(null, this.id, null);
             return;
         }
-        if(!returnJson){
+        if(returnJson){
             this.response.response(resp, this.id, null);
             return;
         }
