@@ -61,7 +61,7 @@ public class JSON {
 	}
 	
 	public JSON get(String str) {
-		Object json = null;
+		Object json;
 		try {
 			json = jsonO.get(str);
 		} catch (GLException e) {

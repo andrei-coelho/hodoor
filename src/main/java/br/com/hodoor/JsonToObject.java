@@ -1,8 +1,19 @@
 package br.com.hodoor;
 
+/**
+ * @author Andrei Coelho
+ * @version 1.4
+ *
+ * 2019-03-19
+ * https://github.com/andrei-coelho
+ * andreifcoelho@gmail.com
+ *
+ * @descr
+ *
+ */
+
 
 import android.opengl.GLException;
-import android.util.Log;
 
 import java.lang.reflect.Constructor;
 import java.lang.reflect.Field;
@@ -34,17 +45,7 @@ import org.json.JSONObject;
 import br.com.hodoor.annotation.BLOCK;
 import br.com.hodoor.annotation.CHANGE;
 
-/**
- * @author Andrei Coelho
- * @version 1.1
- *
- * 2019-03-19
- * https://github.com/andrei-coelho
- * andreifcoelho@gmail.com
- *
- * @descr
- *
- */
+
 public class JsonToObject<T> {
 
     private List<T> list = new ArrayList<>();
@@ -52,7 +53,6 @@ public class JsonToObject<T> {
     JsonToObject(String json, Class<?> c) throws GLException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         try {
-            Log.i("JSON", json);
             JSONObject jo = new JSONObject(json);
             setList(jo, c);
         } catch (JSONException e) {
@@ -60,6 +60,7 @@ public class JsonToObject<T> {
                 JSONArray ja = new JSONArray(json);
                 setList(ja, c);
             } catch (JSONException e1) {
+                this.list = null;
                 e1.printStackTrace();
             }
         }
