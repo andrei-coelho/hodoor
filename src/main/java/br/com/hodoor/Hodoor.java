@@ -38,7 +38,7 @@ public class Hodoor<T> {
     private Response response;
     private boolean returnObject = true;
     private Integer delay = 500;
-    private Integer statusCode;
+    private Integer statusCode = 200;
 
     private static RequestQueue queue;
     private static Handler handler;
