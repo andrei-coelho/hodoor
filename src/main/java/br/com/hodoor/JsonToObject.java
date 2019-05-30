@@ -49,7 +49,7 @@ public class JsonToObject<T> {
 
     private List<T> list = new ArrayList<>();
 
-    public JsonToObject(String json, Class<?> c) throws GLException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
+    JsonToObject(String json, Class<?> c) throws GLException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         try {
             Log.i("JSON", json);
@@ -65,7 +65,6 @@ public class JsonToObject<T> {
         }
 
     }
-
 
     @SuppressWarnings("unchecked")
     private void setList(JSONObject j, Class<?> c) throws GLException, InvocationTargetException, NoSuchMethodException, InstantiationException, JSONException, IllegalAccessException {
@@ -248,7 +247,7 @@ public class JsonToObject<T> {
                 } else if(n instanceof JSONArray) {
                     n = readJson((JSONArray) n, f);
                 } else {
-                    throw new GLException(20, "The object was not identified");
+                    throw new GLException(300, "The object was not identified");
                 }
             }
 

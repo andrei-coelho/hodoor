@@ -9,13 +9,9 @@
  * 
  * 
  */
-package br.com.hodoor;
+package br.com.hodoor.json;
 
 import android.opengl.GLException;
-
-import org.json.JSONArray;
-import org.json.JSONException;
-import org.json.JSONObject;
 
 public class JSON {
 	
@@ -28,7 +24,7 @@ public class JSON {
 	
 	public JSON() {}
 	
-	JSON(StringBuffer formatJson) throws JSONException {
+	public JSON(StringBuffer formatJson) throws JSONException {
 		jsonO = new JSONObject(formatJson.toString());
 	}
 	
@@ -43,7 +39,7 @@ public class JSON {
 	JSON(JSONObject object) {
 		jsonO = object;
 	}
-	
+
 	public JSON get(int i) {
 		Object json = null;
 		try {
@@ -115,7 +111,6 @@ public class JSON {
 		}
 		if(json instanceof Boolean) {
 			valueBoolean = (Boolean) json;
-			return;
 		}
 	}
 	

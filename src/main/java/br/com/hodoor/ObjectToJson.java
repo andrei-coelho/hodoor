@@ -24,6 +24,7 @@ import br.com.hodoor.annotation.BLOCK;
 import br.com.hodoor.annotation.BOUND;
 import br.com.hodoor.annotation.CHANGE;
 import br.com.hodoor.annotation.CLASSNAME;
+import br.com.hodoor.json.JSON;
 
 
 public class ObjectToJson {

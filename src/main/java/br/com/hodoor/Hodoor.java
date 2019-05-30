@@ -15,6 +15,8 @@ import java.lang.reflect.InvocationTargetException;
 import java.util.HashMap;
 import java.util.List;
 
+import br.com.hodoor.json.JSON;
+
 
 public class Hodoor<T> {
 
