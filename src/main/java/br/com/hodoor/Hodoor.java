@@ -47,9 +47,9 @@ public class Hodoor<T> {
 
     public interface Response {
 
-        void HttpObjectResponse(Object o, Integer id);
-        void HttpListResponse(List<?> l, Integer id);
-        void HttpResponseError(Integer hodoorError, Integer networkResponseError, Integer id);
+        void httpObjectResponse(Object o, Integer id);
+        void httpListResponse(List<?> l, Integer id);
+        void httpResponseError(Integer hodoorError, Integer networkResponseError, Integer id);
 
     }
 
@@ -177,31 +177,31 @@ public class Hodoor<T> {
             return;
         }
         if(resp == null){
-            this.response.HttpResponseError(HTTP_RESPONSE_ERROR, this.statusCode, this.id);
+            this.response.httpResponseError(HTTP_RESPONSE_ERROR, this.statusCode, this.id);
             return;
         }
         if(!returnObject){
-            this.response.HttpObjectResponse(resp, this.id);
+            this.response.httpObjectResponse(resp, this.id);
             return;
         }
         try {
             JsonToObject<T> jo =  new JsonToObject<>(resp,classResponse);
             List<T> listO = jo.getList();
             if(listO.size() == 1){
-                this.response.HttpObjectResponse(listO.get(0),this.id);
+                this.response.httpObjectResponse(listO.get(0),this.id);
                 return;
             }
-            this.response.HttpListResponse(listO,this.id);
+            this.response.httpListResponse(listO,this.id);
         } catch (NoSuchMethodException e) {
-            this.response.HttpResponseError(NO_SUCH_METHOD, this.statusCode, this.id);
+            this.response.httpResponseError(NO_SUCH_METHOD, this.statusCode, this.id);
         } catch (InstantiationException e) {
-            this.response.HttpResponseError(INSTANTIATION, this.statusCode, this.id);
+            this.response.httpResponseError(INSTANTIATION, this.statusCode, this.id);
         } catch (IllegalAccessException e) {
-            this.response.HttpResponseError(ILLEGAL_ACCESS, this.statusCode, this.id);
+            this.response.httpResponseError(ILLEGAL_ACCESS, this.statusCode, this.id);
         } catch (InvocationTargetException e) {
-            this.response.HttpResponseError(INVOCATION_TARGET, this.statusCode, this.id);
+            this.response.httpResponseError(INVOCATION_TARGET, this.statusCode, this.id);
         } catch (NullPointerException e){
-            this.response.HttpResponseError(JSON_CONVERTER, this.statusCode, this.id);
+            this.response.httpResponseError(JSON_CONVERTER, this.statusCode, this.id);
         }
 
     }

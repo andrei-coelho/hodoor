@@ -31,17 +31,17 @@ public class MainActivity extends AppCompatActivity  implements Hodoor.Response 
 And then the methods:
 ```java
     @Override
-    public void HttpObjectResponse(Object o, Integer id) {
+    public void httpObjectResponse(Object o, Integer id) {
         
     }
 
     @Override
-    public void HttpListResponse(List<?> l, Integer id) {
+    public void httpListResponse(List<?> l, Integer id) {
         
     }
 
     @Override
-    public void HttpResponseError(Integer hodoorError, Integer networkResponseError, Integer id) {
+    public void httpResponseError(Integer hodoorError, Integer networkResponseError, Integer id) {
         
     }
 ```
@@ -95,8 +95,8 @@ public class MainActivity extends AppCompatActivity  implements Hodoor.Response 
     }
 
     @Override
-    public void HttpObjectResponse(Object o, Integer id) {
-        Peson person = (Person)o; // this is your object
+    public void httpObjectResponse(Object o, Integer id) {
+        Person person = (Person)o; // this is your object
     }
 
 ```
