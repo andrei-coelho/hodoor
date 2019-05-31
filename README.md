@@ -19,7 +19,7 @@ Clone this repository in your project and insert into your manifest these permis
 
 To use Hodoor in an Activity, you must implement its interface:
 
-```
+```java
 public class MainActivity extends AppCompatActivity  implements Hodoor.Response {
     
     protected void onCreate(Bundle savedInstanceState) {
@@ -29,7 +29,7 @@ public class MainActivity extends AppCompatActivity  implements Hodoor.Response 
 ```
 
 And then the methods:
-```
+```java
     @Override
     public void HttpObjectResponse(Object o, Integer id) {
         
