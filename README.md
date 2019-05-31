@@ -46,23 +46,57 @@ And then the methods:
     }
 ```
 
-#### HTTP Connections
+#### OK... But... Why do I need this lib?
 
-See how simple it is to make an HTTP connection:
+This library will help you write fewer codes. You will make as many HTTP connections as necessary and will manage the objects sent and received on those connections asynchronously.
+
+Imagine that you have the following class Person:
+
+```java
+public class Person {
+    
+    private String name;
+    private int age;
+
+    private Person(){} // <-- This constructor will be used by Hodoor
+
+    @Override
+    public String toString() {
+        return "name: "+name+" | age: "+age;
+    }
+}
+```
+
+and after the connection you will receive the following JSON response from the server:
+
+```json
+{"name":"Jon Snow", "age":30}
+```
+
+Now, see how simple it is to retrieve this value and transform it into an object:
 
 ```java
 public class MainActivity extends AppCompatActivity  implements Hodoor.Response {
 
-    private Hodoor<?> hodoor;
+    private Hodoor<Person> hodoor; // <-- Hodoor Object with type Person
 
     @Override
     protected void onCreate(Bundle savedInstanceState) {
         super.onCreate(savedInstanceState);
         setContentView(R.layout.activity_main);
+        
+        // Initialize
+        hodoor = new Hodoor<>(getApplicationContext(), "http://www.myapi.com", Person.class);
+        //                     # Context                # url                  # Person class
 
-        hodoor = new Hodoor<>(getApplicationContext(), "http://www.myapi.com", People.class);
-        hodoor.setResponse(this);
-        hodoor.send();
+        hodoor.setResponse(this); // configure where the response will be sent
+        hodoor.send(); // do it
 
     }
+
+    @Override
+    public void HttpObjectResponse(Object o, Integer id) {
+        Peson person = (Person)o; // this is your object
+    }
+
 ```
