@@ -6,16 +6,16 @@ HTTP Object Door is a library for simplified management of input and output info
 
 - Android API 15 +
 
-### Installing
+## Installing
 
 Clone this repository in your project and insert into your manifest these permissions:
 
-```
+```XML
 <uses-permission android:name="android.permission.ACCESS_NETWORK_STATE" />
 <uses-permission android:name="android.permission.INTERNET" />
 ```
 
-### Usage
+## Usage
 
 To use Hodoor in an Activity, you must implement its interface:
 
@@ -43,5 +43,26 @@ And then the methods:
     @Override
     public void HttpResponseError(Integer hodoorError, Integer networkResponseError, Integer id) {
         
+    }
+```
+
+#### HTTP Connections
+
+See how simple it is to make an HTTP connection:
+
+```java
+public class MainActivity extends AppCompatActivity  implements Hodoor.Response {
+
+    private Hodoor<?> hodoor;
+
+    @Override
+    protected void onCreate(Bundle savedInstanceState) {
+        super.onCreate(savedInstanceState);
+        setContentView(R.layout.activity_main);
+
+        hodoor = new Hodoor<>(getApplicationContext(), "http://www.myapi.com", People.class);
+        hodoor.setResponse(this);
+        hodoor.send();
+
     }
 ```
