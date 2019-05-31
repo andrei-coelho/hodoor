@@ -187,7 +187,7 @@ public class Hodoor<T> {
         try {
             JsonToObject<T> jo =  new JsonToObject<>(resp,classResponse);
             List<T> listO = jo.getList();
-            if(listO.size() == 1){
+            if(!jo.isList()){
                 this.response.httpObjectResponse(listO.get(0),this.id);
                 return;
             }

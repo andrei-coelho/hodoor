@@ -49,11 +49,13 @@ import br.com.hodoor.annotation.CHANGE;
 public class JsonToObject<T> {
 
     private List<T> list = new ArrayList<>();
+    private boolean isList = true;
 
     JsonToObject(String json, Class<?> c) throws GLException, NoSuchMethodException, InstantiationException, IllegalAccessException, InvocationTargetException {
 
         try {
             JSONObject jo = new JSONObject(json);
+            this.isList = false;
             setList(jo, c);
         } catch (JSONException e) {
             try {
@@ -283,4 +285,7 @@ public class JsonToObject<T> {
         return list;
     }
 
+    public boolean isList() {
+        return isList;
+    }
 }
