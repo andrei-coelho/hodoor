@@ -37,7 +37,7 @@ public class Hodoor<T> {
     private Class classResponse;
     private Response response;
     private boolean returnObject = true;
-    private Integer delay = 500;
+    private Integer delay = 100;
     private Integer statusCode = 200;
 
     private static RequestQueue queue;
@@ -46,8 +46,11 @@ public class Hodoor<T> {
     public static final int HTTP_RESPONSE_ERROR = 1, NO_SUCH_METHOD = 2, INSTANTIATION = 3, ILLEGAL_ACCESS = 4, INVOCATION_TARGET = 5, JSON_CONVERTER = 6;
 
     public interface Response {
-        void HttpResponse(Object o, Integer id);
+
+        void HttpObjectResponse(Object o, Integer id);
+        void HttpListResponse(List<?> l, Integer id);
         void HttpResponseError(Integer hodoorError, Integer networkResponseError, Integer id);
+
     }
 
     public Hodoor (Context context, String url, Class classResponse){
@@ -74,10 +77,12 @@ public class Hodoor<T> {
 
     public void setPost(String key, List<?> list){
         try {
-            ObjectToJson oj = new ObjectToJson(list, true);
-            String jObjectPost = oj.toString();
             post = new HashMap<>();
-            post.put(key, jObjectPost);
+            StringBuffer sb = new StringBuffer("[");
+            for (Object o: list) {
+                sb.append(new ObjectToJson(o, false).toString()).append(",");
+            }
+            post.put(key, sb.substring(0, sb.length() -1) + "]");
         } catch (IllegalAccessException e) {
             e.printStackTrace();
         }
@@ -85,7 +90,7 @@ public class Hodoor<T> {
 
     public void setPost(String key, Object o){
         try {
-            ObjectToJson oj = new ObjectToJson(o, true);
+            ObjectToJson oj = new ObjectToJson(o, false);
             String jObjectPost = oj.toString();
             post = new HashMap<>();
             post.put(key, jObjectPost);
@@ -125,7 +130,8 @@ public class Hodoor<T> {
     }
 
     private void getData(final int ini){
-        handler = new Handler();
+        if(handler == null)
+            handler = new Handler();
         final Runnable runnable = new Runnable() {
             final Runnable runner = this;
             @Override
@@ -139,14 +145,18 @@ public class Hodoor<T> {
                 }, new com.android.volley.Response.ErrorListener() {
                     @Override
                     public void onErrorResponse(VolleyError error) {
-                        if(ini < 2){
+                        if(ini < 1){
                             int i = ini + 1;
                             getData(i);
                         } else {
-                            statusCode = error.networkResponse.statusCode;
+                            if(error.networkResponse != null) {
+                                statusCode = error.networkResponse.statusCode;
+                            } else {
+                                statusCode = 500;
+                            }
                             responseHttp(null);
-                            handler.removeCallbacks(runner);
                         }
+                        handler.removeCallbacks(runner);
                     }
                 }){
                     @Override
@@ -171,17 +181,17 @@ public class Hodoor<T> {
             return;
         }
         if(!returnObject){
-            this.response.HttpResponse(resp, this.id);
+            this.response.HttpObjectResponse(resp, this.id);
             return;
         }
         try {
             JsonToObject<T> jo =  new JsonToObject<>(resp,classResponse);
             List<T> listO = jo.getList();
             if(listO.size() == 1){
-                this.response.HttpResponse(listO.get(0),this.id);
+                this.response.HttpObjectResponse(listO.get(0),this.id);
                 return;
             }
-            this.response.HttpResponse(listO,this.id);
+            this.response.HttpListResponse(listO,this.id);
         } catch (NoSuchMethodException e) {
             this.response.HttpResponseError(NO_SUCH_METHOD, this.statusCode, this.id);
         } catch (InstantiationException e) {

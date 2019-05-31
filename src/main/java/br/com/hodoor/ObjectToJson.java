@@ -33,6 +33,7 @@ public class ObjectToJson {
 	private JSON jsonObject;
 
 	ObjectToJson(Object o, boolean classname) throws IllegalAccessException, IllegalArgumentException {
+
 		Class<?> c = o.getClass();
 		String nameClass = c.getSimpleName();
 		if(c.isAnnotationPresent(CLASSNAME.class) && classname) {
